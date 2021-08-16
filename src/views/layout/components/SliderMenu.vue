@@ -27,6 +27,7 @@ export default {
       this.$store.dispatch('menu/changeCollapse');
     },
     handleClick() {
+      this.$store.dispatch('login/userLogOut');
       this.$router.push({
         name: 'Login',
       });

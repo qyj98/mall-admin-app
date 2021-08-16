@@ -1,23 +1,26 @@
-import login from '../api/login';
+import { getUserCookie, setUserCookie, removeUserCookie } from '@/utills/userCookie';
 
 export default {
   namespaced: true,
   state: {
-    user: {},
+    user: getUserCookie(),
   },
   mutations: {
     setUser(state, payload) {
       state.user = payload;
     },
+    setLogOut(state) {
+      state.user = {};
+    },
   },
   actions: {
     async userLogin(ctx, payload) {
-      if (ctx.state.user.length) {
-        return false;
-      }
-      const user = await login(payload);
-      ctx.commit('setUser', user);
-      return user;
+      setUserCookie(payload);
+      ctx.commit('setUser', payload);
+    },
+    async userLogOut(ctx) {
+      removeUserCookie();
+      ctx.commit('setLogOut');
     },
   },
 };

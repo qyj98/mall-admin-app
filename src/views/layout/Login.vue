@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-// import login from '@/api/login';
+import login from '@/api/login';
 
 export default {
   data() {
@@ -69,19 +69,20 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.isLoading = true;
-          const resp = this.$store.dispatch('login/userLogin', this.loginForm);
-          resp.then((r) => {
-            this.isLoading = false;
-            console.log(r);
-            this.$router.push({
-              name: 'Home',
+          login(this.loginForm)
+            .then((r) => {
+              this.isLoading = false;
+              console.log(r);
+              this.$store.dispatch('login/userLogin', r);
+              this.$router.push({
+                name: 'Home',
+              });
+            })
+            .catch((error) => {
+              this.isLoading = false;
+              this.$message.error(error);
+              this.resetForm(formName);
             });
-          });
-          resp.catch((error) => {
-            this.isLoading = false;
-            this.$message.error(error);
-            this.resetForm(formName);
-          });
           return true;
         }
         console.log('error submit!!');
