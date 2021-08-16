@@ -13,7 +13,7 @@
     </div>
     <ul class="userInfo">
       <li>欢迎覃尤杰 <a-icon type="down" /></li>
-      <li>退出</li>
+      <li @click="handleClick">退出</li>
     </ul>
   </div>
 </template>
@@ -25,6 +25,11 @@ export default {
   methods: {
     toggleCollapsed() {
       this.$store.dispatch('menu/changeCollapse');
+    },
+    handleClick() {
+      this.$router.push({
+        name: 'Login',
+      });
     },
   },
   computed: {
