@@ -9,6 +9,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    children: [], /* //! 该路由下还有子路由 */
   },
   {
     path: '/about',
