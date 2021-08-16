@@ -1,32 +1,34 @@
 <template>
-  <a-form-model
-    ref="loginForm"
-    :model="loginForm"
-    :rules="rules"
-    v-bind="layout"
-  >
-    <a-form-model-item has-feedback label="邮箱" prop="email">
-      <a-input v-model="loginForm.email" />
-    </a-form-model-item>
-    <a-form-model-item has-feedback label="密码" prop="password">
-      <a-input
-        v-model="loginForm.password"
-        type="password"
-        autocomplete="off"
-      />
-    </a-form-model-item>
-    <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-      <a-button type="primary" @click="submitForm('loginForm')">
-        提交
-      </a-button>
-      <a-button style="margin-left: 10px" @click="resetForm('loginForm')">
-        重置
-      </a-button>
-    </a-form-model-item>
-  </a-form-model>
+  <div class="login">
+    <a-form-model
+      ref="loginForm"
+      :model="loginForm"
+      :rules="rules"
+      v-bind="layout"
+    >
+      <a-form-model-item has-feedback label="邮箱" prop="email">
+        <a-input v-model="loginForm.email" />
+      </a-form-model-item>
+      <a-form-model-item has-feedback label="密码" prop="password">
+        <a-input
+          v-model="loginForm.password"
+          type="password"
+          autocomplete="off"
+        />
+      </a-form-model-item>
+      <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
+        <a-button type="primary" @click="submitForm('loginForm')">
+          {{ isLoading ? "登陆中..." : "登录" }}
+        </a-button>
+        <a-button style="margin-left: 10px" @click="resetForm('loginForm')">
+          重置
+        </a-button>
+      </a-form-model-item>
+    </a-form-model>
+  </div>
 </template>
 <script>
-import login from '@/api/login';
+// import login from '@/api/login';
 
 export default {
   data() {
@@ -51,6 +53,7 @@ export default {
         password: '',
         email: '',
       },
+      isLoading: false,
       rules: {
         password: [{ validator: validatePass, trigger: 'change' }],
         email: [{ validator: checkEmail, trigger: 'change' }],
@@ -65,16 +68,20 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          login(this.loginForm)
-            .then((r) => {
-              console.log(r);
-              this.$router.push({
-                name: 'Home',
-              });
-            })
-            .catch((error) => {
-              this.$message.error(error);
+          this.isLoading = true;
+          const resp = this.$store.dispatch('login/userLogin', this.loginForm);
+          resp.then((r) => {
+            this.isLoading = false;
+            console.log(r);
+            this.$router.push({
+              name: 'Home',
             });
+          });
+          resp.catch((error) => {
+            this.isLoading = false;
+            this.$message.error(error);
+            this.resetForm(formName);
+          });
           return true;
         }
         console.log('error submit!!');
@@ -87,3 +94,11 @@ export default {
   },
 };
 </script>
+
+<style lang="less">
+.login {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 100px 0;
+}
+</style>

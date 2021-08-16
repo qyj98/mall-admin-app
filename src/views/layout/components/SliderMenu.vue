@@ -12,7 +12,7 @@
       </div>
     </div>
     <ul class="userInfo">
-      <li>欢迎覃尤杰 <a-icon type="down" /></li>
+      <li>欢迎{{user.username}} <a-icon type="down" /></li>
       <li @click="handleClick">退出</li>
     </ul>
   </div>
@@ -34,6 +34,7 @@ export default {
   },
   computed: {
     ...mapState('menu', ['collapsed']),
+    ...mapState('login', ['user']),
   },
 };
 </script>
