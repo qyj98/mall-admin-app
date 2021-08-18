@@ -6,17 +6,22 @@ export default [
     path: '/',
     name: 'Home',
     component: Home,
-    meta: { auth: true },
-    children: [], /* //! 该路由下还有子路由 */
+    meta: {
+      auth: true,
+      title: '首页',
+    },
+    children: [{ /* //! 该路由下还有子路由 */
+      path: 'index',
+      name: 'Index',
+      meta: {
+        title: '统计',
+      },
+      component: () => import('../views/page/index.vue'),
+    }],
   },
   {
     path: '/login',
     name: 'Login',
     component: Login,
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
 ];

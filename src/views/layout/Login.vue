@@ -96,7 +96,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .login {
   max-width: 500px;
   margin: 0 auto;

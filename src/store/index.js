@@ -6,7 +6,6 @@ import login from './login';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  strict: true,
   modules: {
     menu,
     login,
