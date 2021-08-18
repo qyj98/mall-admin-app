@@ -1,31 +1,23 @@
-import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/layout/Home.vue';
-import Login from '../views/layout/Login.vue';
+import Vue from 'vue';
+import routes from './routers';
+import store from '@/store';
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-    children: [], /* //! 该路由下还有子路由 */
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  },
-];
-
 const router = new VueRouter({
   routes,
+});
+
+router.beforeResolve((to, from, next) => {
+  if (to.meta.auth) {
+    const users = store.state.login.user;
+    if (users.username && users.appkey && users.email && users.role) {
+      return next();
+    }
+    return next('/login');
+  }
+  return next();
 });
 
 export default router;
