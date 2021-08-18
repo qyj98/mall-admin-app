@@ -14,7 +14,13 @@ const roleToRoute = {
       name: 'ProductAdd',
     },
     {
-      name: 'test',
+      name: 'Home',
+    },
+    {
+      name: 'Index',
+    },
+    {
+      name: 'Login',
     },
   ],
   admin: [
@@ -29,6 +35,15 @@ const roleToRoute = {
     },
     {
       name: 'Category',
+    },
+    {
+      name: 'Home',
+    },
+    {
+      name: 'Index',
+    },
+    {
+      name: 'Login',
     },
   ],
 };
@@ -46,7 +61,7 @@ export default function getMenuRoutes(role, routes) {
   const getRoutes = (route) => {
     const resultRoutes = route.filter((r) => {
       const obj = r;
-      if (allowRoutesName.indexOf(r.name) !== -1) {
+      if (allowRoutesName.indexOf(r.name) !== -1 && !r.meta.hidden) {
         if (obj.children) {
           obj.children = getRoutes(obj.children);
         }
@@ -58,3 +73,17 @@ export default function getMenuRoutes(role, routes) {
   };
   return getRoutes(routes);
 }
+// export default function getMenuRoute(role, routes) {
+//   console.log(role, routes);
+//   const allowRoutesName = roleToRoute[role].map((item) => item.name);
+//   const resultRoutes = routes.filter((r) => {
+//     const obj = r;
+//     if (allowRoutesName.indexOf(r.name) !== -1) {
+//       const { children } = obj;
+//       obj.children = children.filter((c) => allowRoutesName.indexOf(c.name) !== -1);
+//       return true;
+//     }
+//     return false;
+//   });
+//   return resultRoutes;
+// }

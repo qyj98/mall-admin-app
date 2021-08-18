@@ -34,7 +34,7 @@ export default {
     },
   },
   computed: {
-    ...mapState('menu', ['collapsed']),
+    ...mapState('menu', ['collapsed', 'menuRoutes']),
     ...mapState('login', ['user']),
   },
 };
