@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-
+// 获取cookies
 export function getUserCookie() {
   return {
     username: Cookies.get('username'),
@@ -8,7 +8,7 @@ export function getUserCookie() {
     appkey: Cookies.get('appkey'),
   };
 }
-
+// 设置cookies
 export function setUserCookie(userInfo) {
   const arr = Object.entries(userInfo);
   for (let i = 0; i < arr.length; i += 1) {
@@ -16,7 +16,7 @@ export function setUserCookie(userInfo) {
   }
   return true;
 }
-
+// 移除cookies
 export function removeUserCookie() {
   Cookies.remove('username');
   Cookies.remove('email');
