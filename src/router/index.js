@@ -51,6 +51,9 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    redirect: { // ?路由重定向，
+      name: 'Index',
+    },
     meta: {
       title: '首页',
       hidden: false,

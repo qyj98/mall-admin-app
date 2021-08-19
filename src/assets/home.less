@@ -47,6 +47,7 @@
                 li {
                     cursor: pointer;
                     text-align: center;
+                    z-index: 1000;
 
                     i {
                         padding-left: 10px;
@@ -64,6 +65,12 @@
                 &:hover {
                     li {
                         display: block;
+                    }
+                    li:last-child {
+                        z-index: 100;
+                        position: absolute;
+                        width: 100px;
+                        background: #ccc;
                     }
                 }
             }
