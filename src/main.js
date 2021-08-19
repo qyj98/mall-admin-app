@@ -6,8 +6,16 @@ import store from './store';
 import './plugins/ant-design-vue';
 import './assets/reset.less';
 
+// 测试接口
+// import * as api from './api/product';
+
+// api.getCategory().then((r) => {
+//   console.log(r);
+// });
+
 Vue.use(VCharts);
 Vue.config.productionTip = false;
+
 new Vue({
   router,
   store,
