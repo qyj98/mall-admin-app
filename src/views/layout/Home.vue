@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" ref="container">
     <div class="menu">
       <LeftMenu />
     </div>
@@ -23,6 +23,14 @@ export default {
   components: { LeftMenu, SliderMenu },
   computed: {
     ...mapState('menu', ['collapsed']),
+  },
+  methods: {
+    handleScrollToTop(disc) {
+      this.$refs.container.scrollTop = disc;
+    },
+  },
+  created() {
+    this.$bus.$on('scrollToTop', this.handleScrollToTop);
   },
 };
 </script>

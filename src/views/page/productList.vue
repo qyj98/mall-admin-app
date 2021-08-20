@@ -1,5 +1,5 @@
 <template>
-  <div class="product-list-container">
+  <div class="product-list-container" ref="container">
     <!-- 内联检索表单 -->
     <Search @submit="handleSubmit" :categoryList="categoryList" />
     <!-- 商品列表table -->
@@ -75,6 +75,8 @@ export default {
         categoryName: this.categoryObj[item.category].name,
       }));
       this.pageInfo.total = resp.total;
+      // 在事件总线上触发一个事件，告诉Home组件翻页了，滚动条要回到顶部
+      this.$bus.$emit('scrollToTop', 0);
     },
   },
   // 进入页面获取全部数据

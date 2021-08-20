@@ -3,6 +3,7 @@ import VCharts from 'v-charts';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import './eventBus';
 import './plugins/ant-design-vue';
 import './assets/reset.less';
 
