@@ -19,9 +19,11 @@ export async function getCategory(params) {
 }
 
 // 查询产品列表
-export async function getProducts(searchWord = '', category = '') {
+export async function getProducts(page = 1, size = 10, searchWord = '', category = '') {
   const res = await request.get('/products/all', {
     params: {
+      page,
+      size,
       searchWord,
       category,
     },
