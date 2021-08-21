@@ -42,61 +42,8 @@ export default {
     ProductTable,
   },
   methods: {
-    // async getTableData(){
-    //     const resp = await api.getProducts(
-    //     page.current,
-    //     page.pageSize,
-    //     this.searchFormList.searchWord,
-    //     this.searchFormList.category,
-    //   );
-    //   this.formList = resp.data;
-    //   // ?每次获取数据后都要进行处理
-    //   this.formList = this.formList.map((item) => ({
-    //     ...item,
-    //     categoryName: this.categoryObj[item.category].name,
-    //   }));
-    //   this.pageInfo.total = resp.total;
-    // },
-    //  点击搜索后重新获取数据,传递仓库中的关键字
-    async handleSubmit(searchForm, callback) {
-      const resp = await api.getProducts(
-        1,
-        10,
-        searchForm.searchWord,
-        searchForm.category,
-      );
-      this.formList = resp.data;
-      // ?处理传递给子组件的formData数据，给每个对象添加categoryName属性，修改列表显示数据-类目
-      this.formList = this.formList.map((item) => ({
-        ...item,
-        categoryName: this.categoryObj[item.category].name, // ?给传递过去的表格数据每一项都添加类目名字
-      }));
-      this.pageInfo.total = resp.total;
-      this.searchFormList = searchForm;
-      this.pageInfo.current = 1;
-      callback(false);
-    },
-    async handleChangePage(page) {
-      // 页码变化时重新获取数据
-      this.pageInfo = page;
-      const resp = await api.getProducts(
-        page.current,
-        page.pageSize,
-        this.searchFormList.searchWord,
-        this.searchFormList.category,
-      );
-      this.formList = resp.data;
-      // ?每次获取数据后都要进行处理
-      this.formList = this.formList.map((item) => ({
-        ...item,
-        categoryName: this.categoryObj[item.category].name,
-      }));
-      this.pageInfo.total = resp.total;
-      // 在事件总线上触发一个事件，告诉Home组件翻页了，滚动条要回到顶部
-      this.$bus.$emit('scrollToTop', 0);
-    },
-    async handleDelete(id) {
-      await api.deleteProduct(id);
+    async getTableData() {
+      // ?获取表单数据
       const resp = await api.getProducts(
         this.pageInfo.current,
         this.pageInfo.pageSize,
@@ -104,14 +51,34 @@ export default {
         this.searchFormList.category,
       );
       this.formList = resp.data;
-      // ?每次获取数据后都要进行处理
+      // ?获取数据后要进行处理 给每一项数据加上categoryName属性,修改表格的类目列
       this.formList = this.formList.map((item) => ({
         ...item,
         categoryName: this.categoryObj[item.category].name,
       }));
       this.pageInfo.total = resp.total;
     },
+    async handleSubmit(searchForm, callback) {
+      //  点击搜索后重新获取数据,传递过来仓库中的关键字
+      this.pageInfo.current = 1;
+      this.pageInfo.pageSize = 10;
+      this.searchFormList = searchForm;
+      this.getTableData();
+      callback(false);
+    },
+    async handleChangePage(page) {
+      // 页码变化时重新获取数据
+      this.pageInfo = page;
+      await this.getTableData();
+      this.$bus.$emit('scrollToTop', 0);
+    },
+    async handleDelete(id) {
+      await api.deleteProduct(id);
+      // 获取表格数据
+      this.getTableData();
+    },
     handleEidt(rowInfo) {
+      // 表格编辑
       this.$router.push({
         name: 'ProductEidt',
       });
@@ -130,14 +97,7 @@ export default {
     });
     // console.log(this.categoryObj);
     // 获取表格数据
-    const allData = await api.getProducts();
-    this.formList = allData.data;
-    this.pageInfo.total = allData.total;
-    // ?每次获取数据后都要进行处理
-    this.formList = this.formList.map((item) => ({
-      ...item,
-      categoryName: this.categoryObj[item.category].name,
-    }));
+    this.getTableData();
   },
 };
 </script>
