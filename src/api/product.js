@@ -30,3 +30,15 @@ export async function getProducts(page = 1, size = 10, searchWord = '', category
   });
   return res;
 }
+
+// 删除商品
+export async function deleteProduct(id) {
+  const res = await request.delete(`/products/${id}`);
+  return res;
+}
+
+// 编辑商品
+// export async function eidtProduct(id) {
+//   const res = await request.delete(`/products/${id}`);
+//   return res;
+// }

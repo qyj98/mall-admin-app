@@ -2,6 +2,7 @@
   <a-menu
     :default-selected-keys="[selectedKeys]"
     :default-open-keys="[openKeys]"
+    :selectedKeys="[selectedKeys]"
     mode="inline"
     theme="dark"
     :inline-collapsed="collapsed"
@@ -26,8 +27,8 @@ import { mapState } from 'vuex';
 export default {
   data() {
     return {
-      selectedKeys: '',
-      openKeys: '',
+      selectedKeys: '', // 默认选中的菜单
+      openKeys: '', // 默认展开的菜单
     };
   },
   computed: {
@@ -39,6 +40,15 @@ export default {
       ? this.$router.currentRoute.matched[1].name
       : '';
     this.openKeys = this.$router.currentRoute.matched[0].name;
+  },
+  watch: {
+    $route() {
+      // console.log('路由改变了');
+      const name = this.$router.currentRoute.matched[1]
+        ? this.$router.currentRoute.matched[1].name
+        : '';
+      this.selectedKeys = name;
+    },
   },
 };
 </script>

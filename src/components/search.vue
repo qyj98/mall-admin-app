@@ -32,6 +32,7 @@
         </a-button>
       </a-form-model-item>
     </a-form-model>
+    <router-link :to="{name: 'ProductAdd'}" class="add">新增商品</router-link>
   </div>
 </template>
 
@@ -71,8 +72,23 @@ export default {
 <style lang="less" scoped>
 .secrch-container {
   margin-left: 40px;
+  position: relative;
   .searchInp {
     margin-right: 40px;
+  }
+  .add{
+    position: absolute;
+    right: 50px;
+    top: 5px;
+    height: 30px;
+    padding: 0 10px;
+    color: #000;
+    line-height: 30px;
+    border: 1px solid;
+    background: #ccc;
+    &:hover{
+      background: #eee;
+    }
   }
 }
 </style>

@@ -32,6 +32,7 @@ import login from '@/api/login';
 
 export default {
   data() {
+    // 登录校验
     const emailReg = /^[\w-]+@[\w.-]+.com$/;
     const checkEmail = (rule, value, callback) => {
       if (!value) {
@@ -72,7 +73,7 @@ export default {
           login(this.loginForm)
             .then((r) => {
               this.isLoading = false;
-              console.log(r);
+              // console.log(r);
               this.$store.dispatch('login/userLogin', r);
               this.$router.push({
                 name: 'Home',

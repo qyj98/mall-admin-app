@@ -3,6 +3,7 @@ import Vue from 'vue';
 import store from '@/store';
 import Home from '../views/layout/Home.vue';
 import Login from '../views/layout/Login.vue';
+import productEidt from '../views/page/productEdit.vue';
 import getMenuRoutes from '../utills/permission';
 
 Vue.use(VueRouter);
@@ -41,6 +42,15 @@ const asyncRoutes = [
           icon: 'table',
         },
         component: () => import('@/views/page/category.vue'),
+      }, {
+        path: 'productEidt',
+        name: 'ProductEidt',
+        meta: {
+          title: '编辑商品',
+          icon: 'table',
+          hidden: false,
+        },
+        component: productEidt,
       },
     ],
   },
@@ -87,20 +97,22 @@ const router = new VueRouter({
 let isAddRoutes = false;
 // 导航守卫
 router.beforeResolve((to, from, next) => {
+  // 仅登录页面需要鉴权
   if (to.path !== '/login') {
     const users = store.state.login.user;
+    // 登录成功
     if (users.username && users.appkey && users.email && users.role) {
       if (!isAddRoutes) {
-        // 动态路由菜单与静态路由合并进行校验 获取校验后的路由菜单保存至仓库中
+        // ?动态路由菜单与静态路由合并进行校验 获取校验后的所有路由菜单保存至仓库中
         const allRoutes = routes.concat(asyncRoutes);
         const menuRoutes = getMenuRoutes(store.state.login.user.role, allRoutes);
-        // 获取校验后的动态路由列表添加到VueRouter中
+        // 获取校验后的动态路由列表
         const asyncRouteList = getMenuRoutes(store.state.login.user.role, asyncRoutes);
         // ?将校验后的路由列表保存至仓库中,并且保存完成以后才允许添加动态路由并切换页面，防止通过地址栏访问页面时还没有给仓库添加数据，无法提供给页面
         store.dispatch('menu/setMenuRoutes', menuRoutes).then(() => {
+          // ?校验后的动态路由列表添加到VueRouter中
           router.addRoutes(asyncRouteList);
           next();
-          // 将动态路由列表添加到VueRouter中
         });
         isAddRoutes = true;// ?如果不添加会导致重复addRoutes，从而导致路由name重复报警告
       }
