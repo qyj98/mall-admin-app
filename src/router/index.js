@@ -43,12 +43,11 @@ const asyncRoutes = [
         },
         component: () => import('@/views/page/category.vue'),
       }, {
-        path: 'productEidt',
+        path: 'eidt',
         name: 'ProductEidt',
         meta: {
           title: '编辑商品',
-          icon: 'table',
-          hidden: false,
+          hidden: true,
         },
         component: productEidt,
       },

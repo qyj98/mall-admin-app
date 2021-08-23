@@ -37,6 +37,12 @@ export async function deleteProduct(id) {
   return res;
 }
 
+// 新增商品
+export async function addProduct(params) {
+  const res = await request.post('/products/add', params);
+  return res;
+}
+
 // 编辑商品
 // export async function eidtProduct(id) {
 //   const res = await request.delete(`/products/${id}`);

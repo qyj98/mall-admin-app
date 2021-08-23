@@ -29,8 +29,11 @@ export default {
       this.$refs.container.scrollTop = disc;
     },
   },
-  created() {
+  mounted() {
     this.$bus.$on('scrollToTop', this.handleScrollToTop);
+  },
+  destoryed() {
+    this.$bus.$off('scrollToTop', this.handleScrollToTop);
   },
 };
 </script>

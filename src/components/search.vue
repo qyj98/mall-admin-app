@@ -32,7 +32,7 @@
         </a-button>
       </a-form-model-item>
     </a-form-model>
-    <router-link :to="{name: 'ProductAdd'}" class="add">新增商品</router-link>
+    <router-link :to="{name: 'ProductAdd'}" class="add">添加商品</router-link>
   </div>
 </template>
 

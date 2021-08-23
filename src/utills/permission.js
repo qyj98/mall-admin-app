@@ -67,7 +67,7 @@ export default function getMenuRoutes(role, routes) {
   const getRoutes = (route) => {
     const resultRoutes = route.filter((r) => {
       const obj = r;
-      if (allowRoutesName.indexOf(r.name) !== -1 && !r.meta.hidden) {
+      if (allowRoutesName.indexOf(r.name) !== -1) {
         if (obj.children) {
           obj.children = getRoutes(obj.children);
         }
