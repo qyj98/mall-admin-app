@@ -20,7 +20,7 @@
       </a-select>
       <a-select
         ref="item"
-        v-model="form.c_items"
+        v-model="form.c_item"
         prop="items"
         placeholder="请添加子类目"
       >
@@ -52,7 +52,7 @@ import * as api from '../api/product';
 export default {
   data() {
     return {
-    //   labelCol: { span: 4 },
+      //   labelCol: { span: 4 },
       wrapperCol: { span: 14 },
       other: '',
       categoryList: [],
@@ -96,8 +96,19 @@ export default {
   async created() {
     const resp = await api.getCategory();
     this.categoryList = resp.data;
+    if (this.form.category) {
+      for (let i = 0; i < this.categoryList.length; i += 1) {
+        if (this.categoryList[i].id === this.form.category) {
+          this.itemsList = this.categoryList[i].c_items;
+        }
+      }
+    }
   },
   methods: {
+    addItem() {
+      console.log('addItem');
+      this.items.push(`New item ${this.i += 1}`);
+    },
     next() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {

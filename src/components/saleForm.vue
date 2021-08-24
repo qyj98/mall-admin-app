@@ -73,7 +73,7 @@ export default {
     };
   },
   props: ['form'],
-  // 处理图片列表对象，添加一些其他属性
+  // 按照ant-design处理图片列表对象，用于编辑时的数据回填
   created() {
     if (this.form.images.length > 0) {
       this.fileList = this.form.images.map((item, index) => ({

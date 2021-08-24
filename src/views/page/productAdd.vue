@@ -52,6 +52,15 @@ export default {
     BasicForm,
     SaleForm,
   },
+  async created() {
+    const { id } = this.$route.params;
+    if (id) {
+      // 读取商品详情
+      const resp = await api.productDetail(id);
+      console.log(resp);
+      this.form = resp;
+    }
+  },
   methods: {
     next(basicFormInfo) {
       this.current += 1;
@@ -65,11 +74,17 @@ export default {
       this.current -= 1;
     },
     async handleSubmit(allForm) {
-      await api.addProduct(allForm);
+      if (this.$route.params.id) {
+        this.$message.success('修改成功');
+        await api.eidtProduct(allForm);
+      } else {
+        this.$message.success('新增成功');
+        await api.addProduct(allForm);
+      }
       this.$router.push({
         name: 'ProductList',
       });
-    //   console.log(allForm);
+      //   console.log(allForm);
     },
   },
 };

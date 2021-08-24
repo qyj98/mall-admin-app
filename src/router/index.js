@@ -3,7 +3,6 @@ import Vue from 'vue';
 import store from '@/store';
 import Home from '../views/layout/Home.vue';
 import Login from '../views/layout/Login.vue';
-import productEidt from '../views/page/productEdit.vue';
 import getMenuRoutes from '../utills/permission';
 
 Vue.use(VueRouter);
@@ -43,13 +42,13 @@ const asyncRoutes = [
         },
         component: () => import('@/views/page/category.vue'),
       }, {
-        path: 'eidt',
+        path: 'edit/:id',
         name: 'ProductEidt',
         meta: {
           title: '编辑商品',
           hidden: true,
         },
-        component: productEidt,
+        component: () => import('@/views/page/productAdd.vue'),
       },
     ],
   },

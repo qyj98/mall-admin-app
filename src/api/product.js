@@ -43,8 +43,14 @@ export async function addProduct(params) {
   return res;
 }
 
+// 查询商品详情
+export async function productDetail(id) {
+  const res = await request.get(`/products/${id}`);
+  return res;
+}
+
 // 编辑商品
-// export async function eidtProduct(id) {
-//   const res = await request.delete(`/products/${id}`);
-//   return res;
-// }
+export async function eidtProduct(params) {
+  const res = await request.put('/products/edit', params);
+  return res;
+}

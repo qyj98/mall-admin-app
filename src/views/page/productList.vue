@@ -81,8 +81,11 @@ export default {
       // 表格编辑
       this.$router.push({
         name: 'ProductEidt',
+        params: {
+          id: rowInfo.id,
+        },
       });
-      console.log(rowInfo);
+      // console.log(rowInfo);
     },
   },
   // 进入页面获取全部数据
